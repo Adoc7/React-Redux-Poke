@@ -1,5 +1,5 @@
 import initialState from "./initialState";
-import { CLICK } from './action';
+import { CLICK, FETCH_POKEMON_SUCCESS } from './action';
 
 // Reducer n'est pas du React, juste du JAVASCRIPT
 const reducer = (state = initialState, action) => {
@@ -13,6 +13,13 @@ const reducer = (state = initialState, action) => {
                 // On va juste modifier la valeur 
                 // de la propriété click du state
                 click: state.click + 1
+            }
+            case FETCH_POKEMON_SUCCESS:
+                return {
+                ...state,
+                // On met à jour le tableau vide de l'initialState
+                pokemons: action.pokemons
+                // on va appeller cette fonction dans App
             }
         default:
             return state;

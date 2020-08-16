@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.css";
 // Connection au Store
 import { connect } from 'react-redux';
 import { CLICK } from './store/action'
+import fetchpokemons from './store/fetchPokemons';
 
 import GameBoy from "./components/GameBoy";
 import PokeList from "./components/PokeList";
 
-const App = ({handleClick}) => {
+const App = ({handleClick, fetchpokemons}) => {
+  
+  // On veut qu'au chargement de l'app on fetch les Pokemons
+  useEffect(() => {
+    fetchpokemons()
+  }, [fetchpokemons])// Le tableau veut dire, si fetchpokemons est modifié tu relance fetchpokemons
+
   return (
     <div className="App">
       <button onClick={() => handleClick()}>click</button>
@@ -16,7 +23,7 @@ const App = ({handleClick}) => {
     </div>
   );
 };
-// On fera afficher le resultat du clic dans PocketList (voir le fichier)
+// On fera afficher le resultat du clic dans PoketList (voir le fichier)
 
 // On mappe notre dispatch de l'action CLICK sur les props de notre Component
 const mapDispatchToProps = dispatch => {
@@ -27,6 +34,8 @@ const mapDispatchToProps = dispatch => {
    qu'on a importé en haut
    */
   return {
+  /*Ici on dispatch une fonction qui va dispatcher une action */
+    fetchpokemons: () => dispatch(fetchpokemons()),
     handleClick: () => dispatch({ type: CLICK })
   }
 }
